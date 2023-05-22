@@ -35,7 +35,6 @@ events = [
   "Computer Programming",
   "Cow-A-Bungee",
   "Cybersecurity",
-  "Demo Events",
   "Designer Genes",
   "Detector Building",
   "Digital Structures",
@@ -58,10 +57,8 @@ events = [
   "Energy Contest",
   "Entomology",
   "Environmental Chemistry",
-  "Events",
   "Evolution",
   "Experimental Design",
-  "Exploratory Events",
   "Facts in Five",
   "Feathered Frenzy",
   "Fermi Questions",
@@ -113,7 +110,6 @@ events = [
   "Name That Organism",
   "Nature Quest",
   "Oceanography",
-  "Open Events",
   "Optics",
   "Orienteering",
   "Ornithology",
@@ -168,7 +164,6 @@ events = [
   "Trajectory Contest",
   "Tree Identification",
   "Tree-mendous",
-  "Trial/Pilot Events",
   "Up, Up, & Away",
   "Useful Plants",
   "Using the Web",
@@ -186,24 +181,66 @@ events = [
   "Write It CAD It",
   "Write It Do It",
 ];
+event_keys = events.map((e) => e.toLowerCase());
 
-// for (i = 0; i < events.length; ++i) {
-//   let event = events[i];
-//   let topic = `topic${event}`;
-//   let a = document.createElement("input", {
-//     type: "radio",
-//     class: "btm-check",
-//     name: "btnradio",
-//     id: topic,
-//     autocomplete: "off",
-//   });
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
 
-//   let b = document.createElement("label", {
-//     class: "btn btn-outline-primary",
-//     for: topic,
-//   });
+let primary = 1;
+let secondary = "";
+let trigger_secondary = ["event", "event", "aevent", "aevent", "oevent"];
 
-//   b.innerText = event;
+for (let i = 1; i <= trigger_secondary.length; ++i) {
+  let docel = document.getElementById("resource" + i);
+  ((index) => {
+    docel.addEventListener("click", (event) => {
+      secondary = trigger_secondary[index];
+      document.getElementById("secondary-select").style.visibility = "visible";
+      primary = index;
+    });
+  })(i);
+}
 
-//   document.getElementById("");
-// }
+document.getElementById("secondary-text").addEventListener("keyup", (event) => {
+  if (event.isComposing || event.keyCode === 229) {
+    return;
+  }
+
+  let values = document.getElementById("secondary-text").value.split(";");
+  let results = events.filter((s) =>
+    values.some((value) => s.toLowerCase().startsWith(value.toLowerCase()))
+  );
+
+  let display = document.getElementById("secondary-list");
+  removeAllChildNodes(display);
+  for (const result of results) {
+    let topic = `topic${result}`;
+    let a = document.createElement("input", {
+      type: "radio",
+      class: "btn-check",
+      name: "btnradio",
+      id: topic,
+      autocomplete: "off",
+    });
+
+    a.type = "radio";
+    a.classList.add("btn-check");
+    a.name = "btnradio";
+    a.name = topic;
+
+    let b = document.createElement("label", {
+      class: "btn btn-outline-primary",
+      for: topic,
+    });
+
+    b.classList.add("btn", "btn-outline-primary");
+    b.for = topic;
+    b.innerText = result;
+
+    display.appendChild(a);
+    display.appendChild(b);
+  }
+});
