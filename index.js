@@ -1,11 +1,5 @@
-let all_tests, events;
-
-async function init() {
-  all_tests = await fetch("tests.json/", {});
-  console.log(all_tests);
-  events = new Set(all_tests.map((t) => t.event.toUpperCase()));
-}
-init();
+const all_tests = resources;
+const events = [...new Set(all_tests.map((t) => t.event.toUpperCase()))];
 
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
@@ -35,8 +29,9 @@ document.getElementById("secondary-text").addEventListener("keyup", (event) => {
 
   let values = document.getElementById("secondary-text").value.split(";");
   let results = events.filter((s) =>
-    values.some((value) => s.toUpperCase().startsWith(value.toLowerCase()))
+    values.some((value) => s.toUpperCase().startsWith(value.toUpperCase()))
   );
+  console.log(results);
 
   let display = document.getElementById("secondary-list");
   removeAllChildNodes(display);
