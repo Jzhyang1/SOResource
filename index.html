@@ -71,21 +71,42 @@
           >
         </div>
       </div>
-      <div
-        id="secondary-select"
-        class="input-group input-group-sm mb-3 search-box"
-      >
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="secondary-label">Event</span>
+      <div id="secondary-select">
+        <div id="secondary-search-area-toggle">
+          <div
+            id="secondary-search-area"
+            class="input-group input-group-sm mb-3 search-box"
+          >
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="secondary-label">Event</span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Small"
+              aria-describedby="secondary-label"
+              id="secondary-text"
+            />
+          </div>
+          <div class="form-check form-switch" id="current-events-only-box">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="current-events-only-toggle"
+            />
+            <label class="form-check-label" for="current-events-only-toggle"
+              >Current Only</label
+            >
+          </div>
         </div>
-        <input
-          type="text"
-          class="form-control"
-          aria-label="Small"
-          aria-describedby="secondary-label"
-          id="secondary-text"
-        />
-        <span id="secondary-list" class="btn-group" role="group"></span>
+        <div>
+          <span
+            id="secondary-list"
+            class="btn-group v-stack"
+            role="group"
+          ></span>
+        </div>
       </div>
     </section>
     <section id="result-box"></section>

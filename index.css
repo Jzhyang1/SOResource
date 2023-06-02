@@ -11,3 +11,12 @@
   width: 50%;
   padding-top: 1em;
 }
+.v-stack {
+  flex-direction: column;
+}
+.h-stack {
+  flex-direction: row;
+}
+#secondary-search-area {
+  width: 100%;
+}
