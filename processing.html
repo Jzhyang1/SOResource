@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p><span id="output1"></span></p>
+    <p><span id="output2"></span></p>
+  </body>
+  <script src="tests.js"></script>
+  <script>
+    const transferFunc = (e) => {
+      let ret = { event: e.event };
+      if (e.notes) ret.notes = e.notes;
+
+      if (e.link && !e.links) ret.link = e.link;
+      else if (!e.link && e.links.length == 1) ret.link = e.links[0];
+      else ret.links = [e.link, ...e.links];
+
+      if (e.key) ret.key = e.key;
+
+      return ret;
+    };
+
+    const yale = resources.filter((e) => e.tournament == "UT Invite");
+    const scoresheets = yale
+      .filter((e) => e.type == "scoresheet")
+      .map(transferFunc);
+    const tests = yale.filter((e) => e.type == "test").map(transferFunc);
+    console.log(tests);
+    console.log(scoresheets);
+
+    document.getElementById("output1").innerText = JSON.stringify(tests);
+    document.getElementById("output2").innerText = JSON.stringify(scoresheets);
+  </script>
+</html>

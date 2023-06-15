@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    const eventsubmit = () => {
+      const eventlist = document.getElementById("events").value.split(",");
+      document.getElementById("event-inputs").innerHTML = eventlist
+        .map(
+          (e) => `
+          <h3>${e}</h3>
+                <label for="scoresheet-${e}">scoresheet</label>
+                <input type="checkbox" id="scoresheet-${e}"/> <br/>
+                <label for="links-${e}">links</label>
+                <input type="text" id="links-${e}"/> <br/>
+                <label for="keys-${e}">keys</label>
+                <input type="text" id="keys-${e}"/> <br/>
+                <label for="notes-${e}">notes</label>
+                <input type="text" id="notes-${e}"/> <br/>
+                <label for="dists-${e}">score distribution</label>
+                <input type="text" id="dists-${e}"/> <br/>
+            `
+        )
+        .join("<br/>");
+    };
+    const submit = () => {
+      let tests = [];
+      let scoreSheets = [];
+      let scores = [];
+
+      const eventlist = document.getElementById("events").value.split(",");
+      for (const e of eventlist) {
+        const eventval = { event: e };
+
+        const scoresheet = document.getElementById("scoresheet-" + e).checked;
+        const links = document.getElementById("links-" + e).value.split(",");
+        const keys = document.getElementById("keys-" + e).value.split(",");
+        const notes = document.getElementById("notes-" + e).value;
+        const dists = document.getElementById("dists-" + e).value.split(",");
+
+        if (links.length && links[0])
+          if (links.length == 1) eventval.link = links[0];
+          else eventval.links = links;
+
+        if (keys.length && keys[0])
+          if (keys.length == 1) eventval.key = keys[0];
+          else eventval.keys = keys;
+
+        if (notes) eventval.notes = notes;
+
+        if (scoresheet) scoreSheets.push(eventval);
+        else tests.push(eventval);
+
+        if (dists.length && dists[0])
+          if (dists.length == 1) scores.push({ event: e, link: dists[0] });
+          else scores.push({ event: e, links: dists });
+      }
+
+      document.getElementById("output").innerText = JSON.stringify({
+        tournament: document.getElementById("tournament").value,
+        year: document.getElementById("year").value,
+        tests,
+        scoreSheets,
+        scores,
+      });
+    };
+  </script>
+  <body>
+    <label for="year">year</label>
+    <input type="text" id="year" />
+    <label for="tournament">tournament</label>
+    <input type="text" id="tournament" />
+    <label for="events">events</label>
+    <input type="text" id="events" />
+    <button onclick="eventsubmit()">next</button>
+    <div id="event-inputs"></div>
+    <button onclick="submit()">submit</button>
+    <p><span id="output"></span></p>
+  </body>
+  <script src="tests.js"></script>
+</html>
